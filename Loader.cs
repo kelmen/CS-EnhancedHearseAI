@@ -10,26 +10,33 @@ using UnityEngine;
 
 namespace EnhancedHearseAI
 {
-    public class Loader : LoadingExtensionBase
+    public class Loader : ILoadingExtension
     {
         Helper _helper;
 
-        public override void OnCreated(ILoading loading)
+        public Loader()
         {
             _helper = Helper.Instance;
+        }
 
+        public void OnCreated(ILoading loading)
+        {
             _helper.GameLoaded = loading.loadingComplete;
         }
 
-        public override void OnLevelLoaded(LoadMode mode)
+        public void OnLevelLoaded(LoadMode mode)
         {
             if (mode == LoadMode.NewGame || mode == LoadMode.LoadGame)
                 _helper.GameLoaded = true;
         }
 
-        public override void OnLevelUnloading()
+        public void OnLevelUnloading()
         {
             _helper.GameLoaded = false;
+        }
+
+        public void OnReleased()
+        {
         }
     }
 }
